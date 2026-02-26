@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyCast | Premium Weather Insights</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: 'rgba(255, 255, 255, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-900 text-white font-sans transition-all duration-700 min-h-screen">
+    <!-- Background Overlay for Dynamic Colors -->
+    <div id="bg-overlay"
+        class="fixed inset-0 bg-gradient-to-br from-slate-900 to-slate-800 -z-10 transition-all duration-1000"></div>
+
+    <main class="container mx-auto px-4 py-8 max-w-lg md:max-w-4xl">
+        <!-- Search Section -->
+        <header class="mb-12">
+            <div class="relative flex items-center group">
+                <i
+                    class="fa-solid fa-magnifying-glass absolute left-4 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                <input type="text" id="city-input" placeholder="Search city..."
+                    class="w-full bg-white/10 border border-white/20 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/50 backdrop-blur-md transition-all placeholder:text-gray-500">
+                <button id="locate-btn"
+                    class="ml-2 p-4 bg-white/10 border border-white/20 rounded-2xl hover:bg-white/20 transition-all backdrop-blur-md"
+                    title="Use current location">
+                    <i class="fa-solid fa-location-crosshairs text-blue-400"></i>
+                </button>
+            </div>
+            <!-- Search History (Optional/Intermediate) -->
+            <div id="search-history" class="mt-2 flex flex-wrap gap-2 hidden">
+                <!-- History chips injected here -->
+            </div>
+        </header>
+
+        <section id="weather-content" class="hidden">
+            <!-- Hero Card: Current Weather -->
+            <div
+                class="glass border border-white/20 rounded-[2.5rem] p-8 md:p-12 mb-8 relative overflow-hidden backdrop-blur-xl shadow-2xl">
+                <div
+                    class="relative z-10 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
+                    <div>
+                        <h1 id="city-name" class="text-4xl md:text-6xl font-bold mb-2">London</h1>
+                        <p id="date-time" class="text-gray-400 text-lg">Thursday, 26 Feb</p>
+                        <div class="flex items-center justify-center md:justify-start mt-6 group">
+                            <span id="temperature" class="text-7xl md:text-9xl font-bold tracking-tighter">12º</span>
+                            <div class="ml-4 flex flex-col border-l border-white/20 pl-4">
+                                <button id="unit-c"
+                                    class="text-xl font-bold text-white hover:text-blue-400 transition-colors">C</button>
+                                <button id="unit-f"
+                                    class="text-xl font-bold text-gray-500 hover:text-blue-400 transition-colors">F</button>
+                            </div>
+                        </div>
+                        <p id="weather-desc" class="text-2xl font-light mt-4 text-black capitalize">Partly Cloudy</p>
+                    </div>
+
+                    <div class="flex flex-col items-center">
+                        <div id="weather-icon-container"
+                            class="w-48 h-48 flex items-center justify-center drop-shadow-2xl">
+                            <!-- SVG Animated Icon Injected Here -->
+                            <i class="fa-solid fa-cloud-sun text-8xl"></i>
+                        </div>
+                        <div class="mt-4 flex gap-4">
+                            <div class="text-center">
+                                <span class="block text-xs uppercase tracking-widest text-gray-400 mb-1">Low</span>
+                                <span id="temp-min" class="text-xl font-semibold">8º</span>
+                            </div>
+                            <div class="text-center">
+                                <span class="block text-xs uppercase tracking-widest text-gray-400 mb-1">High</span>
+                                <span id="temp-max" class="text-xl font-semibold">15º</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="glass-card flex items-center p-6 gap-6 rounded-3xl border border-white/10 backdrop-blur-md">
+                    <div class="w-14 h-14 bg-blue-500/20 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-droplet text-blue-400 text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Humidity</p>
+                        <p id="humidity" class="text-2xl font-bold">64%</p>
+                    </div>
+                </div>
+                <div class="glass-card flex items-center p-6 gap-6 rounded-3xl border border-white/10 backdrop-blur-md">
+                    <div class="w-14 h-14 bg-green-500/20 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-wind text-green-400 text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Wind Speed</p>
+                        <p id="wind-speed" class="text-2xl font-bold">12 km/h</p>
+                    </div>
+                </div>
+                <div class="glass-card flex items-center p-6 gap-6 rounded-3xl border border-white/10 backdrop-blur-md">
+                    <div class="w-14 h-14 bg-purple-500/20 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-temperature-half text-purple-400 text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Feels Like</p>
+                        <p id="feels-like" class="text-2xl font-bold">10º</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forecast Section -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <i class="fa-regular fa-calendar-days text-blue-400"></i>
+                    5-Day Forecast
+                </h2>
+                <div id="forecast-container" class="flex gap-4 overflow-x-auto pb-4 hide-scrollbar">
+                    <!-- Forecast items injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Initial/Loading State -->
+        <div id="placeholder" class="h-96 flex flex-col items-center justify-center text-center opacity-50">
+            <div class="w-24 h-24 mb-6 border-4 border-white/10 border-t-blue-500 rounded-full animate-spin hidden"
+                id="loader"></div>
+            <div id="welcome-msg">
+                <i class="fa-solid fa-cloud-sun text-6xl mb-6 text-gray-700"></i>
+                <h2 class="text-2xl font-medium">Ready to explore?</h2>
+                <p class="mt-2 text-gray-400">Search for a city or use your location</p>
+            </div>
+            <div id="error-msg" class="hidden">
+                <i class="fa-solid fa-circle-exclamation text-6xl mb-6 text-red-500/50"></i>
+                <h2 class="text-2xl font-medium">City not found</h2>
+                <p class="mt-2 text-gray-400">Please check the spelling and try again</p>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>

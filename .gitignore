@@ -1,0 +1,4 @@
+.env
+config.js
+# Optionally ignore config.js if you want to keep the API key private
+# and provide a config.example.js instead.

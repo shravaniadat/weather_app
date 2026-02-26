@@ -1,0 +1,177 @@
+/* Custom Styles for Weather App */
+
+body {
+    overflow-x: hidden;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Hide scrollbar for cleaner look */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#weather-content {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Dynamic backgrounds based on weather */
+.bg-sunny {
+    background: linear-gradient(to bottom right, #f59e0b, #ea580c);
+}
+
+.bg-cloudy {
+    background: linear-gradient(to bottom right, #475569, #1e293b);
+}
+
+.bg-rainy {
+    background: linear-gradient(to bottom right, #2563eb, #1e40af);
+}
+
+.bg-snowy {
+    background: linear-gradient(to bottom right, #94a3b8, #cbd5e1);
+}
+
+.bg-stormy {
+    background: linear-gradient(to bottom right, #4c1d95, #1e1b4b);
+}
+
+/* Forecast items animation */
+.forecast-item {
+    min-width: 120px;
+    animation: fadeIn 0.5s ease-out backwards;
+}
+
+.forecast-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.forecast-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.forecast-item:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.forecast-item:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.forecast-item:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+/* Micro-animations for icons */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes pulse-soft {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+#weather-icon-container i {
+    animation: float 3s ease-in-out infinite, pulse-soft 4s ease-in-out infinite;
+}
+
+/* --- Responsive Refinements --- */
+
+/* Smartphone View (up to 640px) */
+@media (max-width: 639px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    #city-name {
+        font-size: 2.25rem;
+    }
+
+    #temperature {
+        font-size: 4.5rem;
+    }
+
+    .glass {
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+    }
+
+    .forecast-item {
+        min-width: 100px;
+        padding: 0.75rem;
+    }
+}
+
+/* Tablet View (640px to 1024px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+    .container {
+        max-width: 600px;
+    }
+
+    #city-name {
+        font-size: 3.5rem;
+    }
+
+    #temperature {
+        font-size: 6rem;
+    }
+}
+
+/* Laptop/Desktop View (1024px and up) */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1000px;
+    }
+}
