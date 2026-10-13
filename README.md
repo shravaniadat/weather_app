@@ -50,9 +50,5 @@ SkyCast is a modern, responsive weather application that provides real-time weat
 - Click the **C** or **F** icons to switch temperature units.
 - Revisit recent searches using the chips below the search bar.
 
-## 📄 License
 
-This project is open-source and available under the [MIT License](LICENSE).
 
----
-Developed with ❤️ by [Shravani](https://github.com/shravaniadat)
